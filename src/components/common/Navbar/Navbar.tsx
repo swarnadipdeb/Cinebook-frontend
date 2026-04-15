@@ -12,12 +12,6 @@ export default function Navbar() {
 
         <div className="flex items-center gap-6">
           <Link
-            to={ROUTES.HOME}
-            className="relative text-[--color-text] text-[15px] font-medium transition-colors duration-150 hover:text-[--color-text-heading] before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-[2px] before:bg-[--color-primary] before:transition-all before:duration-150 hover:before:w-full"
-          >
-            Movies
-          </Link>
-          <Link
             to={ROUTES.PROFILE}
             className="relative text-[--color-text] text-[15px] font-medium transition-colors duration-150 hover:text-[--color-text-heading] before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-[2px] before:bg-[--color-primary] before:transition-all before:duration-150 hover:before:w-full"
           >

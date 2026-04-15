@@ -1,8 +1,18 @@
+import { useState, useEffect } from 'react'
 import MovieGrid from '../../components/features/movies/MovieGrid'
+import MovieFilters from '../../components/features/movies/MovieFilters'
 import { useMovies } from '../../hooks/useMovies'
+import type { Movie } from '../../types'
 
 export default function HomePage() {
   const { movies, loading } = useMovies()
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([])
+
+  useEffect(() => {
+    if (!loading) {
+      setFilteredMovies(movies)
+    }
+  }, [movies, loading])
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 py-8">
@@ -16,7 +26,11 @@ export default function HomePage() {
           </p>
         </header>
 
-        <MovieGrid movies={movies} loading={loading} />
+        {!loading && movies.length > 0 && (
+          <MovieFilters movies={movies} onFilteredMovies={setFilteredMovies} />
+        )}
+
+        <MovieGrid movies={filteredMovies} loading={loading} />
       </section>
     </div>
   )
