@@ -46,7 +46,7 @@ export default function SeatSelectionPage() {
 
   if (!movie) {
     return (
-      <div className="text-center py-16 text-[--color-text-muted]">
+      <div className="text-center py-16 text-[var(--color-text-muted)]">
         <p>No movie selected. Please go back and choose a movie.</p>
       </div>
     )
@@ -55,12 +55,12 @@ export default function SeatSelectionPage() {
   return (
     <div className="max-w-[1280px] mx-auto px-4 py-6">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-extrabold text-[--color-text-heading] mb-6">Select Your Seats</h1>
+        <h1 className="text-3xl font-extrabold text-[var(--color-text-heading)] mb-6">Select Your Seats</h1>
         <SeatLegend />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
-        <div className="bg-[--color-bg-card] border border-[--color-border] rounded-xl overflow-hidden">
+        <div className="bg-[var(--color-bg-card)] rounded-xl overflow-hidden shadow-[var(--shadow-card)]">
           <SeatMap selectedSeats={selectedSeats} onToggle={toggleSeat} />
         </div>
 

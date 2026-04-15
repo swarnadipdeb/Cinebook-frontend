@@ -16,7 +16,7 @@ export default function SeatLegend() {
             className="w-5 h-5 rounded flex-shrink-0"
             style={{ background: item.color }}
           />
-          <span className="text-sm text-[--color-text-muted]">{item.label}</span>
+          <span className="text-sm text-[var(--color-text-muted)]">{item.label}</span>
         </div>
       ))}
     </div>

@@ -25,7 +25,8 @@
       "Bash(ls vite.config*)",
       "Bash(rm -rf node_modules/.vite)",
       "Bash(ls -la vite.config*)",
-      "Bash(dir vite.config*)"
+      "Bash(dir vite.config*)",
+      "Bash(grep -E \"bg-\\\\[-\\\\$|--color-\")"
     ]
   }
 }

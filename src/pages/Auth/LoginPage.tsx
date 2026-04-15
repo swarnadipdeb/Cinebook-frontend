@@ -35,15 +35,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[calc(100vh-72px-200px)] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[420px] bg-[--color-bg-card] border border-[--color-border] rounded-xl p-8">
+      <div className="w-full max-w-[420px] bg-gradient-to-br from-[var(--color-bg-card)] to-[var(--color-bg-elevated)] rounded-xl p-8 shadow-[var(--shadow-elevated)]">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-[--color-text-heading] mb-1">Welcome Back</h1>
-          <p className="text-[--color-text-muted]">Sign in to continue booking</p>
+          <h1 className="text-3xl font-extrabold text-[var(--color-text-heading)] mb-1">Welcome Back</h1>
+          <p className="text-[var(--color-text-muted)]">Sign in to continue booking</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-semibold text-[--color-text]">Email</label>
+            <label htmlFor="email" className="text-sm font-semibold text-[var(--color-text)]">Email</label>
             <input
               id="email"
               name="email"
@@ -51,19 +51,19 @@ export default function LoginPage() {
               autoComplete="email"
               value={form.email}
               onChange={handleChange}
-              className={`px-4 py-3 bg-[--color-bg-elevated] border rounded-lg text-[--color-text-heading] text-base transition-colors duration-150 outline-none ${
-                errors.email ? 'border-[--color-error]' : 'border-[--color-border] focus:border-[--color-primary]'
+              className={`px-4 py-3 bg-[var(--color-bg)] rounded-lg text-[var(--color-text-heading)] text-base transition-all duration-150 outline-none ${
+                errors.email ? 'ring-2 ring-[var(--color-error)]' : 'focus:ring-2 focus:ring-[var(--color-primary)]'
               }`}
               placeholder="you@example.com"
               aria-describedby={errors.email ? 'email-error' : undefined}
             />
             {errors.email && (
-              <span id="email-error" className="text-[13px] text-[--color-error]">{errors.email}</span>
+              <span id="email-error" className="text-[13px] text-[var(--color-error)]">{errors.email}</span>
             )}
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="password" className="text-sm font-semibold text-[--color-text]">Password</label>
+            <label htmlFor="password" className="text-sm font-semibold text-[var(--color-text)]">Password</label>
             <input
               id="password"
               name="password"
@@ -71,29 +71,29 @@ export default function LoginPage() {
               autoComplete="current-password"
               value={form.password}
               onChange={handleChange}
-              className={`px-4 py-3 bg-[--color-bg-elevated] border rounded-lg text-[--color-text-heading] text-base transition-colors duration-150 outline-none ${
-                errors.password ? 'border-[--color-error]' : 'border-[--color-border] focus:border-[--color-primary]'
+              className={`px-4 py-3 bg-[var(--color-bg)] rounded-lg text-[var(--color-text-heading)] text-base transition-all duration-150 outline-none ${
+                errors.password ? 'ring-2 ring-[var(--color-error)]' : 'focus:ring-2 focus:ring-[var(--color-primary)]'
               }`}
               placeholder="Enter your password"
               aria-describedby={errors.password ? 'password-error' : undefined}
             />
             {errors.password && (
-              <span id="password-error" className="text-[13px] text-[--color-error]">{errors.password}</span>
+              <span id="password-error" className="text-[13px] text-[var(--color-error)]">{errors.password}</span>
             )}
           </div>
 
           <button
             type="submit"
-            className="mt-1 py-4 bg-[--color-primary] text-white rounded-lg font-bold text-base transition-colors duration-150 hover:bg-[--color-primary-hover] disabled:opacity-60 disabled:cursor-not-allowed"
+            className="mt-1 py-4 bg-[var(--color-primary)] text-white rounded-lg font-bold text-base transition-colors duration-150 hover:bg-[var(--color-primary-hover)] disabled:opacity-60 disabled:cursor-not-allowed"
             disabled={submitting}
           >
             {submitting ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <p className="text-center mt-6 text-[--color-text-muted] text-[15px]">
+        <p className="text-center mt-6 text-[var(--color-text-muted)] text-[15px]">
           Don&apos;t have an account?{' '}
-          <Link to={ROUTES.REGISTER} className="text-[--color-primary] font-semibold hover:underline">Create one</Link>
+          <Link to={ROUTES.REGISTER} className="text-[var(--color-primary)] font-semibold hover:underline">Create one</Link>
         </p>
       </div>
     </div>

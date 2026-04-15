@@ -43,7 +43,7 @@ export default function SeatMap({ selectedSeats, onToggle }: SeatMapProps) {
   return (
     <div className="flex flex-col items-center gap-4 p-6">
       <div className="w-full max-w-[480px] mb-6">
-        <div className="bg-gradient-to-b from-white/15 to-white/5 rounded-t-full px-8 py-3 text-center text-xs font-bold tracking-[3px] text-white/50 uppercase border border-white/10 border-b-none">
+        <div className="bg-gradient-to-b from-[var(--color-bg-elevated)] to-[var(--color-bg-card)] rounded-t-full px-8 py-3 text-center text-xs font-bold tracking-[3px] text-[var(--color-text-muted)] uppercase">
           SCREEN
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function SeatMap({ selectedSeats, onToggle }: SeatMapProps) {
         ))}
       </div>
 
-      <p className="text-xs text-[--color-text-muted] text-center mt-2">Aisle</p>
+      <p className="text-xs text-[var(--color-text-muted)] text-center mt-2">Aisle</p>
     </div>
   )
 }

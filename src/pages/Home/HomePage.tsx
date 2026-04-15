@@ -18,10 +18,10 @@ export default function HomePage() {
     <div className="max-w-[1280px] mx-auto px-4 py-8">
       <section>
         <header className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-[--color-text-heading] mb-2">
+          <h1 className="text-4xl font-bold text-[var(--color-text-heading)] mb-2">
             Now Showing
           </h1>
-          <p className="text-[--color-text-muted]">
+          <p className="text-[var(--color-text-muted)]">
             Book tickets for the latest movies
           </p>
         </header>

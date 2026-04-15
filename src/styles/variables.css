@@ -15,6 +15,7 @@
   --color-bg: #0d0d12;
   --color-bg-card: #16161d;
   --color-bg-elevated: #1e1e27;
+  --color-bg-hover: #22222c;
   --color-bg-overlay: rgba(0, 0, 0, 0.7);
 
   /* Borders */
@@ -49,6 +50,7 @@
   /* Shadows */
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
   --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px rgba(170, 59, 255, 0.3);
 
   /* Transitions */
   --transition-fast: 150ms ease;

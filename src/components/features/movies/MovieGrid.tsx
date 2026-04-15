@@ -11,7 +11,7 @@ export default function MovieGrid({ movies, loading }: MovieGridProps) {
     return (
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="bg-[--color-bg-card] border border-[--color-border] rounded-xl aspect-[2/3] animate-pulse" />
+          <div key={i} className="bg-[var(--color-bg-card)] rounded-xl aspect-[2/3] animate-pulse" />
         ))}
       </div>
     )
@@ -19,7 +19,7 @@ export default function MovieGrid({ movies, loading }: MovieGridProps) {
 
   if (!movies || movies.length === 0) {
     return (
-      <p className="text-center col-span-full py-16 text-[--color-text-muted]">No movies found</p>
+      <p className="text-center col-span-full py-16 text-[var(--color-text-muted)]">No movies found</p>
     )
   }
 

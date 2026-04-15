@@ -82,23 +82,23 @@ export default function MovieFilters({ movies, onFilteredMovies }: MovieFiltersP
   const hasActiveFilters = searchQuery || selectedGenre || minRating > 0 || releaseFilter !== 'all'
 
   return (
-    <div className="bg-[--color-bg-card] border border-[--color-border] rounded-xl p-4 mb-8">
+    <div className="bg-gradient-to-br from-[var(--color-bg-card)] to-[var(--color-bg-elevated)] rounded-xl p-4 mb-8">
       <div className="flex flex-wrap gap-4">
         {/* Search Input */}
         <div className="flex-1 min-w-[200px]">
-          <label className="block text-sm text-[--color-text-muted] mb-1">Search</label>
+          <label className="block text-sm text-[var(--color-text-muted)] mb-1">Search</label>
           <div className="relative">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search movies, genres, directors..."
-              className="w-full bg-[--color-bg] border border-[--color-border] rounded-lg px-4 py-2 text-[--color-text] placeholder-[--color-text-muted] focus:outline-none focus:border-[--color-primary]"
+              className="w-full bg-[var(--color-bg)] rounded-lg px-4 py-2 text-[var(--color-text)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[--color-text-muted] hover:text-[--color-text] text-sm"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] text-sm"
               >
                 Clear
               </button>
@@ -108,11 +108,11 @@ export default function MovieFilters({ movies, onFilteredMovies }: MovieFiltersP
 
         {/* Genre Filter */}
         <div className="min-w-[150px]">
-          <label className="block text-sm text-[--color-text-muted] mb-1">Genre</label>
+          <label className="block text-sm text-[var(--color-text-muted)] mb-1">Genre</label>
           <select
             value={selectedGenre}
             onChange={(e) => setSelectedGenre(e.target.value)}
-            className="w-full bg-[--color-bg] border border-[--color-border] rounded-lg px-4 py-2 text-[--color-text] focus:outline-none focus:border-[--color-primary]"
+            className="w-full bg-[var(--color-bg)] rounded-lg px-4 py-2 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150"
           >
             <option value="">All Genres</option>
             {allGenres.map((genre) => (
@@ -125,13 +125,13 @@ export default function MovieFilters({ movies, onFilteredMovies }: MovieFiltersP
 
         {/* Rating Filter */}
         <div className="min-w-[150px]">
-          <label className="block text-sm text-[--color-text-muted] mb-1">
+          <label className="block text-sm text-[var(--color-text-muted)] mb-1">
             Min Rating: {minRating > 0 ? `${minRating}+` : 'Any'}
           </label>
           <select
             value={minRating}
             onChange={(e) => setMinRating(Number(e.target.value))}
-            className="w-full bg-[--color-bg] border border-[--color-border] rounded-lg px-4 py-2 text-[--color-text] focus:outline-none focus:border-[--color-primary]"
+            className="w-full bg-[var(--color-bg)] rounded-lg px-4 py-2 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150"
           >
             <option value={0}>Any Rating</option>
             <option value={7}>7+</option>
@@ -142,11 +142,11 @@ export default function MovieFilters({ movies, onFilteredMovies }: MovieFiltersP
 
         {/* Release Date Filter */}
         <div className="min-w-[150px]">
-          <label className="block text-sm text-[--color-text-muted] mb-1">Release</label>
+          <label className="block text-sm text-[var(--color-text-muted)] mb-1">Release</label>
           <select
             value={releaseFilter}
             onChange={(e) => setReleaseFilter(e.target.value)}
-            className="w-full bg-[--color-bg] border border-[--color-border] rounded-lg px-4 py-2 text-[--color-text] focus:outline-none focus:border-[--color-primary]"
+            className="w-full bg-[var(--color-bg)] rounded-lg px-4 py-2 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150"
           >
             <option value="all">All Time</option>
             <option value="today">Today</option>
@@ -162,7 +162,7 @@ export default function MovieFilters({ movies, onFilteredMovies }: MovieFiltersP
         <div className="mt-4 flex justify-end">
           <button
             onClick={clearFilters}
-            className="text-sm text-[--color-primary] hover:text-[--color-primary]/80"
+            className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary)]/80"
           >
             Clear all filters
           </button>
