@@ -73,6 +73,7 @@ export interface User {
 
 export interface AuthContextValue {
   user: User | null
+  isLoggedIn: boolean
   loading: boolean
   login: (email: string, password: string) => Promise<{ success: boolean }>
   register: (name: string, email: string, password: string) => Promise<{ success: boolean }>
