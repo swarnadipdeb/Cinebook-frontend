@@ -19,7 +19,7 @@ npm run preview  # Preview the production build
 - **Framework**: React 19 + Vite 8
 - **Styling**: Tailwind CSS v4 (uses `@tailwindcss/vite` plugin, NOT the old CLI)
 - **Routing**: React Router v7
-- **State**: React Context API (`AuthContext`, `BookingContext`)
+- **State**: React Context API (`AuthContext` with `isLoggedIn`, `BookingContext`)
 - **Language**: TypeScript
 
 ## Architecture
@@ -42,8 +42,8 @@ src/
 │   ├── Profile/             # User profile + booking history
 │   └── Admin/               # Movie + booking management
 ├── hooks/                   # useMovies
-├── store/                   # AuthContext, BookingContext
-├── services/                # movieService, bookingService, api (axios)
+├── store/                   # AuthContext (with isLoggedIn), BookingContext
+├── services/                # movieService, bookingService, authService, api (axios)
 ├── data/                    # Mock: movies, theaters, showtimes
 ├── utils/                   # formatDate, formatPrice, generateTicketId
 ├── constants/               # config, routes, seatTypes

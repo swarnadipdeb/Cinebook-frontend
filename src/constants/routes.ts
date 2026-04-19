@@ -5,6 +5,7 @@ export const ROUTES = {
   CONFIRMATION: '/booking/:bookingId',
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
+  OTP_VERIFY: '/auth/verify-otp',
   PROFILE: '/profile',
   ADMIN: '/admin',
 } as const

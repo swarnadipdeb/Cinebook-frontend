@@ -2,16 +2,16 @@ import axios from 'axios'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '',
-  timeout: 10000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('auth_token')
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`
+  const accessToken = localStorage.getItem('access_token')
+  if (accessToken && config.headers) {
+    config.headers.Authorization = `Bearer ${accessToken}`
   }
   return config
 })
@@ -20,7 +20,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token')
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      localStorage.removeItem('userId')
     }
     return Promise.reject(error)
   }
