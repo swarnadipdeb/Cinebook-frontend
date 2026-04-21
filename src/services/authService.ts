@@ -1,4 +1,5 @@
 import { AUTH_BASE_URL } from '../constants/config'
+import { decodeJwt } from '../utils/jwtDecode'
 
 export interface SignupRequest {
   user_name: string
@@ -21,11 +22,15 @@ export interface LoginRequest {
 export interface JwtResponse {
   accessToken: string
   token: string
-  userId: string
+  userName: string
 }
 
 export interface RefreshTokenRequest {
   token: string
+}
+
+export interface TokenClaims {
+  roles?: string[]
 }
 
 const TIMEOUT_MS = 150000
@@ -42,7 +47,11 @@ async function fetchWithTimeout(url: string, options: RequestInit): Promise<Resp
 }
 
 export const authService = {
-  async signup(data: SignupRequest): Promise<{ userId: string }> {
+  decodeToken(token: string): TokenClaims | null {
+    return decodeJwt(token) as TokenClaims | null
+  },
+
+  async signup(data: SignupRequest): Promise<{ userName: string }> {
     const response = await fetchWithTimeout(`${AUTH_BASE_URL}/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -55,12 +64,12 @@ export const authService = {
     return response.json()
   },
 
-  async verifyOtp(userId: string, otp: string, data?: OtpVerifyRequest): Promise<JwtResponse> {
+  async verifyOtp(userName: string, otp: string, data?: OtpVerifyRequest): Promise<JwtResponse> {
     const response = await fetchWithTimeout(`${AUTH_BASE_URL}/signup-otp-verify?otp=${otp}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        UserId: userId,
+        UserName: userName,
       },
       body: JSON.stringify(data || {}),
     })

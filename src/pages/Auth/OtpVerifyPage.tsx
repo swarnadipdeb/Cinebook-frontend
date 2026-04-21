@@ -11,7 +11,7 @@ export default function OtpVerifyPage() {
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-  const { userId, firstName, lastName, phone } = (location.state as { userId: string; firstName: string; lastName: string; phone: string }) || {}
+  const { userName, firstName, lastName, phone } = (location.state as { userName: string; firstName: string; lastName: string; phone: string }) || {}
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,13 +22,13 @@ export default function OtpVerifyPage() {
       return
     }
 
-    if (!userId) {
+    if (!userName) {
       setError('Session expired. Please register again.')
       return
     }
 
     setSubmitting(true)
-    const result = await verifyOtp(userId, otp, firstName, lastName, phone || undefined)
+    const result = await verifyOtp(userName, otp, firstName, lastName, phone || undefined)
     setSubmitting(false)
 
     if (result.success) {

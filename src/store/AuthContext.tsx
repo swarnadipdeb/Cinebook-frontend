@@ -17,8 +17,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await authService.login({ username: email, password })
       localStorage.setItem('access_token', response.accessToken)
       localStorage.setItem('refresh_token', response.token)
-      localStorage.setItem('userId', response.userId)
-      const userData = { id: response.userId, name: email.split('@')[0], email }
+      const userData = { id: response.userName, name: email.split('@')[0], email }
       setUser(userData)
       localStorage.setItem('user', JSON.stringify(userData))
       setLoading(false)
@@ -29,26 +28,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const register = useCallback(async (name: string, email: string, password: string): Promise<{ success: boolean; userId?: string }> => {
+  const register = useCallback(async (name: string, email: string, password: string): Promise<{ success: boolean; userName?: string }> => {
     setLoading(true)
     try {
       const response = await authService.signup({ user_name: name, email, password })
       setLoading(false)
-      return { success: true, userId: response.userId }
+      return { success: true, userName: response.userName }
     } catch {
       setLoading(false)
       return { success: false }
     }
   }, [])
 
-  const verifyOtp = useCallback(async (userId: string, otp: string, firstName?: string, lastName?: string, phoneNumber?: string): Promise<{ success: boolean }> => {
+  const verifyOtp = useCallback(async (userName: string, otp: string, firstName?: string, lastName?: string, phoneNumber?: string): Promise<{ success: boolean }> => {
     setLoading(true)
     try {
-      const response = await authService.verifyOtp(userId, otp, { first_name: firstName, last_name: lastName, phone_number: phoneNumber })
+      const response = await authService.verifyOtp(userName, otp, { first_name: firstName, last_name: lastName, phone_number: phoneNumber })
       localStorage.setItem('access_token', response.accessToken)
       localStorage.setItem('refresh_token', response.token)
-      localStorage.setItem('userId', response.userId)
-      const userData = { id: response.userId, name: firstName ? `${firstName} ${lastName || ''}`.trim() : 'User', email: '' }
+      localStorage.setItem('userName', response.userName)
+      const userData = { id: response.userName, name: firstName ? `${firstName} ${lastName || ''}`.trim() : 'User', email: '' }
       setUser(userData)
       localStorage.setItem('user', JSON.stringify(userData))
       setLoading(false)

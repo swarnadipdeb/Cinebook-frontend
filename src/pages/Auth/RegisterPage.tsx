@@ -37,8 +37,8 @@ export default function RegisterPage() {
     }
     setSubmitting(true)
     const result = await register(form.userName, form.email, form.password)
-    if (result.success && result.userId) {
-      navigate(ROUTES.OTP_VERIFY, { state: { userId: result.userId, firstName: form.firstName, lastName: form.lastName, phone: form.phone } })
+    if (result.success && result.userName) {
+      navigate(ROUTES.OTP_VERIFY, { state: { userName: result.userName, firstName: form.firstName, lastName: form.lastName, phone: form.phone } })
     } else {
       setSubmitting(false)
     }

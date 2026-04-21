@@ -1,4 +1,13 @@
 {
+ "model": "opus",
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://llm.excloud.in",
+    "ANTHROPIC_CUSTOM_HEADERS": "Authorization: Bearer sk-excloud-BI1vcrQAd8DI9E4UsN_laCv8ku0aFPTD0j5h_nzkEmPu",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "Qwen/Qwen3.5-27B:excloud",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "Qwen/Qwen3.5-27B:excloud",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "Qwen/Qwen3.5-27B:excloud"
+  },
+
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
