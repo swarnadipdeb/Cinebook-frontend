@@ -1,4 +1,4 @@
-import { AUTH_BASE_URL } from '../constants/config'
+import { API_BASE_URL } from '../constants/config'
 import { decodeJwt } from '../utils/jwtDecode'
 
 export interface SignupRequest {
@@ -52,7 +52,7 @@ export const authService = {
   },
 
   async signup(data: SignupRequest): Promise<{ userName: string }> {
-    const response = await fetchWithTimeout(`${AUTH_BASE_URL}/signup`, {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/auth/v1/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -65,7 +65,7 @@ export const authService = {
   },
 
   async verifyOtp(userName: string, otp: string, data?: OtpVerifyRequest): Promise<JwtResponse> {
-    const response = await fetchWithTimeout(`${AUTH_BASE_URL}/signup-otp-verify?otp=${otp}`, {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/auth/v1/signup-otp-verify?otp=${otp}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export const authService = {
   },
 
   async login(credentials: LoginRequest): Promise<JwtResponse> {
-    const response = await fetchWithTimeout(`${AUTH_BASE_URL}/login`, {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/auth/v1/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
@@ -94,7 +94,7 @@ export const authService = {
   },
 
   async refreshToken(data: RefreshTokenRequest): Promise<JwtResponse> {
-    const response = await fetchWithTimeout(`${AUTH_BASE_URL}/refreshToken`, {
+    const response = await fetchWithTimeout(`${API_BASE_URL}/auth/v1/refreshToken`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
