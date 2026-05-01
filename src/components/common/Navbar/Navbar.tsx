@@ -5,7 +5,7 @@ import { APP_NAME } from '../../../constants/config'
 import { useAuth } from '../../../store/AuthContext'
 
 export default function Navbar() {
-  const { user, isLoggedIn, logout } = useAuth()
+  const { user, isLoggedIn, isAdmin, logout } = useAuth()
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -26,12 +26,14 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6">
-          <Link
-            to={ROUTES.ADMIN}
-            className="relative text-[var(--color-text)] text-[15px] font-medium transition-colors duration-150 hover:text-[var(--color-text-heading)] before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-[2px] before:bg-[var(--color-primary)] before:transition-all before:duration-150 hover:before:w-full"
-          >
-            Admin
-          </Link>
+          {isAdmin && (
+            <Link
+              to={ROUTES.ADMIN}
+              className="relative text-[var(--color-text)] text-[15px] font-medium transition-colors duration-150 hover:text-[var(--color-text-heading)] before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-[2px] before:bg-[var(--color-primary)] before:transition-all before:duration-150 hover:before:w-full"
+            >
+              Admin
+            </Link>
+          )}
           {isLoggedIn ? (
             <div className="relative" ref={menuRef}>
               <button

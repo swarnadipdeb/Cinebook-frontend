@@ -1,7 +1,7 @@
 import { useMovies } from '../../hooks/useMovies'
 
 export default function AdminPage() {
-  const { movies, loading } = useMovies()
+  const { movies, loading } = useMovies({ size: 100 })
 
   return (
     <div className="max-w-[1280px] mx-auto px-4 py-8">

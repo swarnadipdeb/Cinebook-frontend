@@ -16,8 +16,6 @@ export const movies: Movie[] = [
     cast: ['Timothée Chalamet', 'Zendaya', 'Javier Bardem'],
     description:
       'Paul Atreides unites with Chani and the Fremen while seeking vengeance against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe.',
-    premiumPrice: 24.99,
-    regularPrice: 14.99,
   },
   {
     id: '2',
@@ -34,8 +32,6 @@ export const movies: Movie[] = [
     cast: ['Tom Holland', 'Florence Pugh'],
     description:
       'A retired detective boards the last run of the Midnight Express to uncover the truth behind a cold case that has haunted him for decades. But the train holds dark secrets.',
-    premiumPrice: 22.99,
-    regularPrice: 12.99,
   },
   {
     id: '3',
@@ -52,8 +48,6 @@ export const movies: Movie[] = [
     cast: ['John Boyega', 'Mads Mikkelsen', 'Zhang Ziyi'],
     description:
       'In Neo Tokyo 2150, a ronin with a mechanical arm hunts down the yakuza clan that destroyed his village. With neon-lit streets and deadly assassins at every corner.',
-    premiumPrice: 23.99,
-    regularPrice: 13.99,
   },
   {
     id: '4',
@@ -70,8 +64,6 @@ export const movies: Movie[] = [
     cast: ['Saoirse Ronan', 'Timothée Chalamet'],
     description:
       'Two strangers meet on a rainy night in Paris and spend one magical evening walking through the city. Years later, they both wonder: what if?',
-    premiumPrice: 19.99,
-    regularPrice: 11.99,
   },
   {
     id: '5',
@@ -88,8 +80,6 @@ export const movies: Movie[] = [
     cast: ['Jennifer Lawrence', 'Idris Elba'],
     description:
       "Astronauts aboard the ISS discover a black hole forming in their backyard. As Earth receives the distress signal, the crew must decide: save themselves or wait for humanity's salvation.",
-    premiumPrice: 26.99,
-    regularPrice: 15.99,
   },
   {
     id: '6',
@@ -106,7 +96,5 @@ export const movies: Movie[] = [
     cast: ['Alexander Skarsgård', 'Carey Mulligan'],
     description:
       'In the twilight of the Viking Age, a war-worn king must unite the fractured kingdoms of the north before the southern empires wipe them from history forever.',
-    premiumPrice: 21.99,
-    regularPrice: 12.99,
   },
 ]

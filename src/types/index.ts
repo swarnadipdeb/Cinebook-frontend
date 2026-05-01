@@ -14,8 +14,23 @@ export interface Movie {
   director: string
   cast: string[]
   description: string
-  premiumPrice: number
-  regularPrice: number
+}
+
+export interface MoviePageResponse {
+  content: Movie[]
+  totalElements: number
+  totalPages: number
+  currentPage: number
+  pageSize: number
+}
+
+export interface MovieQueryParams {
+  page?: number
+  size?: number
+  genre?: string
+  language?: string
+  sort?: string
+  sortDir?: 'asc' | 'desc'
 }
 
 export interface Theater {
@@ -26,14 +41,18 @@ export interface Theater {
   amenities: string[]
 }
 
-export interface Showtime {
+export interface ShowtimeEntry {
   id: string
   movieId: string
-  theater: Theater
+  theaterId: string
   date: string
   times: string[]
   screen: string
   format: string
+}
+
+export interface Showtime extends ShowtimeEntry {
+  theater: Theater
 }
 
 export type SeatType = 'available' | 'selected' | 'booked' | 'premium' | 'disabled'
@@ -69,13 +88,15 @@ export interface User {
   id: string
   name: string
   email: string
+  roles: string[]
 }
 
 export interface AuthContextValue {
   user: User | null
   isLoggedIn: boolean
+  isAdmin: boolean
   loading: boolean
-  login: (email: string, password: string) => Promise<{ success: boolean }>
+  login: (username: string, password: string) => Promise<{ success: boolean }>
   register: (name: string, email: string, password: string) => Promise<{ success: boolean; userName?: string }>
   verifyOtp: (userName: string, otp: string, firstName?: string, lastName?: string, phone?: string) => Promise<{ success: boolean }>
   logout: () => void

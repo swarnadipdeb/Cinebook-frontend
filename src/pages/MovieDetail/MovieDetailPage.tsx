@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getMovieById } from '../../services/movieService'
-import { getShowtimesForMovie } from '../../data/showtimes'
+import { getShowtimes } from '../../services/showtimeService'
 import { formatPrice } from '../../utils/formatPrice'
 import type { Movie, Showtime } from '../../types'
 
@@ -17,7 +17,7 @@ export default function MovieDetailPage() {
   useEffect(() => {
     if (!id) return
     setLoading(true)
-    Promise.all([getMovieById(id), getShowtimesForMovie(id)]).then(
+    Promise.all([getMovieById(id), getShowtimes(id)]).then(
       ([movieData, showtimeData]) => {
         setMovie(movieData)
         setShowtimes(showtimeData)
@@ -135,7 +135,7 @@ export default function MovieDetailPage() {
                 <span className="text-[var(--color-text-muted)] text-sm">{selectedShowtime.format}</span>
               </div>
               <div className="ml-auto text-[var(--color-text-muted)] text-[15px]">
-                <span>From {formatPrice(movie.regularPrice)}</span>
+                <span>Prices shown at seat selection</span>
               </div>
               <button
                 className="px-8 py-3 bg-[var(--color-primary)] text-white rounded-lg font-bold text-base transition-colors duration-150 hover:bg-[var(--color-primary-hover)] cursor-pointer"

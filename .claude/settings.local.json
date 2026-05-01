@@ -36,7 +36,8 @@
       "Bash(grep -E \"bg-\\\\[-\\\\$|--color-\")",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(kill %1)"
     ]
   },
   "model": "opus"

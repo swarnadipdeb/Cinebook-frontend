@@ -1,4 +1,3 @@
-import { API_BASE_URL } from '../constants/config'
 import { decodeJwt } from '../utils/jwtDecode'
 
 export interface SignupRequest {
@@ -32,6 +31,8 @@ export interface RefreshTokenRequest {
 export interface TokenClaims {
   roles?: string[]
 }
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 const TIMEOUT_MS = 150000
 

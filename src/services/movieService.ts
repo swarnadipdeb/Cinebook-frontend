@@ -1,18 +1,21 @@
-import { movies } from '../data/movies'
-import type { Movie } from '../types'
+import api from './api'
+import type { Movie, MoviePageResponse, MovieQueryParams } from '../types'
 
-export const getMovies = (): Promise<Movie[]> => Promise.resolve([...movies])
-
-export const getMovieById = (id: string): Promise<Movie | null> => {
-  const movie = movies.find((m) => m.id === id)
-  return Promise.resolve(movie || null)
+export const getMovies = (params: MovieQueryParams = {}): Promise<MoviePageResponse> => {
+  const query: Record<string, string> = {}
+  if (params.page !== undefined) query.page = String(params.page)
+  if (params.size !== undefined) query.size = String(params.size)
+  if (params.genre) query.genre = params.genre
+  if (params.language) query.language = params.language
+  if (params.sort) query.sort = params.sort
+  if (params.sortDir) query.sortDir = params.sortDir
+  return api.get('/catalog/v1/movies', { params: query }).then((r) => r.data)
 }
 
-export const searchMovies = (query: string): Promise<Movie[]> => {
-  const filtered = movies.filter(
-    (m) =>
-      m.title.toLowerCase().includes(query.toLowerCase()) ||
-      m.genre.some((g) => g.toLowerCase().includes(query.toLowerCase()))
-  )
-  return Promise.resolve(filtered)
+export const searchMovies = (q: string): Promise<Movie[]> => {
+  if (!q.trim()) return Promise.resolve([])
+  return api.get('/catalog/v1/movies/search', { params: { q } }).then((r) => r.data)
 }
+
+export const getMovieById = (id: string): Promise<Movie | null> =>
+  api.get(`/catalog/v1/movies/${id}`).then((r) => r.data).catch(() => null)

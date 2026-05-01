@@ -2,19 +2,17 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../constants/routes'
 import { useAuth } from '../../store/AuthContext'
-import { useFormValidation, EMAIL_REGEX } from '../../hooks/useFormValidation'
+import { useFormValidation } from '../../hooks/useFormValidation'
 
 export default function LoginPage() {
   const navigate = useNavigate()
   const { login } = useAuth()
-  const { form, errors, handleChange, setErrors } = useFormValidation<{ email: string; password: string }>({ email: '', password: '' })
+  const { form, errors, handleChange, setErrors } = useFormValidation<{ username: string; password: string }>({ username: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
 
   const validate = () => {
     const errs: Record<string, string> = {}
-    if (!form.email) errs.email = 'Email is required'
-    else if (!EMAIL_REGEX.test(form.email))
-      errs.email = 'Enter a valid email'
+    if (!form.username.trim()) errs.username = 'Username is required'
     if (!form.password) errs.password = 'Password is required'
     else if (form.password.length < 6)
       errs.password = 'Password must be at least 6 characters'
@@ -29,8 +27,13 @@ export default function LoginPage() {
       return
     }
     setSubmitting(true)
-    await login(form.email, form.password)
-    navigate(ROUTES.HOME)
+    const result = await login(form.username, form.password)
+    if (result.success) {
+      navigate(ROUTES.HOME)
+    } else {
+      setSubmitting(false)
+      setErrors({ username: 'Invalid username or password' })
+    }
   }
 
   return (
@@ -43,22 +46,22 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
           <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm font-semibold text-[var(--color-text)]">Email</label>
+            <label htmlFor="username" className="text-sm font-semibold text-[var(--color-text)]">Username</label>
             <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={form.email}
+              id="username"
+              name="username"
+              type="text"
+              autoComplete="username"
+              value={form.username}
               onChange={handleChange}
               className={`px-4 py-3 bg-[var(--color-bg)] rounded-lg text-[var(--color-text-heading)] text-base transition-all duration-150 outline-none placeholder:text-[var(--color-text-muted)] ${
-                errors.email ? 'ring-2 ring-[var(--color-error)]' : 'focus:ring-2 focus:ring-[var(--color-primary)]'
+                errors.username ? 'ring-2 ring-[var(--color-error)]' : 'focus:ring-2 focus:ring-[var(--color-primary)]'
               }`}
-              placeholder="you@example.com"
-              aria-describedby={errors.email ? 'email-error' : undefined}
+              placeholder="johndoe"
+              aria-describedby={errors.username ? 'username-error' : undefined}
             />
-            {errors.email && (
-              <span id="email-error" className="text-[13px] text-[var(--color-error)]">{errors.email}</span>
+            {errors.username && (
+              <span id="username-error" className="text-[13px] text-[var(--color-error)]">{errors.username}</span>
             )}
           </div>
 
