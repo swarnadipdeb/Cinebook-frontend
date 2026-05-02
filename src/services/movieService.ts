@@ -19,3 +19,12 @@ export const searchMovies = (q: string): Promise<Movie[]> => {
 
 export const getMovieById = (id: string): Promise<Movie | null> =>
   api.get(`/catalog/v1/movies/${id}`).then((r) => r.data).catch(() => null)
+
+export const createMovie = (data: Omit<Movie, 'id' | 'createdAt' | 'updatedAt'>): Promise<Movie> =>
+  api.post('/catalog/v1/movies', data).then((r) => r.data)
+
+export const updateMovie = (id: string, data: Partial<Movie>): Promise<Movie> =>
+  api.put(`/catalog/v1/movies/${id}`, data).then((r) => r.data)
+
+export const deleteMovie = (id: string): Promise<void> =>
+  api.delete(`/catalog/v1/movies/${id}`).then((r) => r.data as undefined)

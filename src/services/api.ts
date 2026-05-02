@@ -59,6 +59,8 @@ api.interceptors.response.use(
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
         localStorage.removeItem('userId')
+        localStorage.removeItem('user')
+        window.dispatchEvent(new Event('auth:logout'))
         window.location.href = '/auth/login'
         return Promise.reject(error)
       }
@@ -81,8 +83,9 @@ api.interceptors.response.use(
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
         localStorage.removeItem('userId')
+        localStorage.removeItem('user')
+        window.dispatchEvent(new Event('auth:logout'))
         window.location.href = '/auth/login'
-
         return Promise.reject(refreshError)
       } finally {
         isRefreshing = false

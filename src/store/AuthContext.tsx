@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
 import type { User, AuthContextValue } from '../types'
 import { authService } from '../services/authService'
 import { decodeJwt } from '../utils/jwtDecode'
@@ -18,6 +18,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   })
   const [loading, setLoading] = useState(false)
   const isAdmin = (user?.roles ?? []).includes('ROLE_ADMIN')
+
+  useEffect(() => {
+    const handleLogout = () => {
+      setUser(null)
+    }
+    window.addEventListener('auth:logout', handleLogout)
+    return () => window.removeEventListener('auth:logout', handleLogout)
+  }, [])
 
   const login = useCallback(async (username: string, password: string): Promise<{ success: boolean }> => {
     setLoading(true)
