@@ -10,7 +10,7 @@ export interface SignupRequest {
 export interface OtpVerifyRequest {
   first_name?: string
   last_name?: string
-  phone_number?: string
+  phone_number?: number
 }
 
 export interface LoginRequest {
@@ -21,7 +21,7 @@ export interface LoginRequest {
 export interface JwtResponse {
   accessToken: string
   token: string
-  userName: string
+  username: string | null
 }
 
 export interface RefreshTokenRequest {
@@ -52,7 +52,7 @@ export const authService = {
     return decodeJwt(token) as TokenClaims | null
   },
 
-  async signup(data: SignupRequest): Promise<{ userName: string }> {
+  async signup(data: SignupRequest): Promise<{ user_name: string }> {
     const response = await fetchWithTimeout(`${API_BASE_URL}/auth/v1/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

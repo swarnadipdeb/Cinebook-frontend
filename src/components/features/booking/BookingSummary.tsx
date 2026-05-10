@@ -1,10 +1,10 @@
 import { formatPrice } from '../../../utils/formatPrice'
-import type { Movie, Showtime, Seat } from '../../../types'
+import type { Movie, ShowtimeResponseDTO, ShowSlot, Seat } from '../../../types'
 
 interface BookingSummaryProps {
   movie: Movie | null
-  showtime: Showtime | null
-  time: string | null
+  showtime: ShowtimeResponseDTO | null
+  slot: ShowSlot | null
   selectedSeats: Seat[]
   totalPrice: number
   onConfirm: () => void
@@ -13,7 +13,7 @@ interface BookingSummaryProps {
 export default function BookingSummary({
   movie,
   showtime,
-  time,
+  slot,
   selectedSeats,
   totalPrice,
   onConfirm,
@@ -33,10 +33,10 @@ export default function BookingSummary({
             <p className="font-bold text-[var(--color-text-heading)] text-[15px] mb-0.5">{movie.title}</p>
             {showtime && (
               <p className="text-[var(--color-text-muted)] text-[13px]">
-                {showtime.theater.name} · {showtime.format} · Screen {showtime.screen}
+                {showtime.theater?.name} &middot; {showtime.format} &middot; Screen {slot?.screenId}
               </p>
             )}
-            {time && <p className="text-[var(--color-primary)] font-bold text-[15px] mt-0.5">{time}</p>}
+            {slot && <p className="text-[var(--color-primary)] font-bold text-[15px] mt-0.5">{slot.time} &middot; {slot.date}</p>}
           </div>
         </div>
       )}

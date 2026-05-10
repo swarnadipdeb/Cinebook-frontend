@@ -2,19 +2,19 @@ import { useLocation, Link } from 'react-router-dom'
 import { ROUTES } from '../../constants/routes'
 import { formatDate } from '../../utils/formatDate'
 import { formatPrice } from '../../utils/formatPrice'
-import type { Movie, Showtime, Seat, Booking } from '../../types'
+import type { Movie, ShowtimeResponseDTO, ShowSlot, Seat, Booking } from '../../types'
 
 interface LocationState {
   booking: Booking
   movie: Movie
-  showtime: Showtime
-  time: string
+  showtime: ShowtimeResponseDTO
+  slot: ShowSlot
   selectedSeats: Seat[]
 }
 
 export default function ConfirmationPage() {
   const location = useLocation()
-  const { booking, movie, showtime, time, selectedSeats } = (location.state || {}) as LocationState
+  const { booking, movie, showtime, slot, selectedSeats } = (location.state || {}) as LocationState
 
   if (!booking || !movie) {
     return (
@@ -47,19 +47,19 @@ export default function ConfirmationPage() {
             <img src={movie.poster} alt={movie.title} className="w-20 rounded-lg flex-shrink-0" />
             <div className="flex flex-col justify-center">
               <h2 className="text-xl font-extrabold text-[var(--color-text-heading)] mb-0.5">{movie.title}</h2>
-              <p className="text-[var(--color-text-muted)] text-sm">{showtime?.theater.name} · {showtime?.format}</p>
-              <p className="text-[var(--color-text-muted)] text-sm">Screen {showtime?.screen}</p>
+              <p className="text-[var(--color-text-muted)] text-sm">{showtime?.theater?.name} &middot; {showtime?.format}</p>
+              <p className="text-[var(--color-text-muted)] text-sm">Screen {slot?.screenId}</p>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-0.5">
               <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">Date</span>
-              <span className="font-bold text-[var(--color-text-heading)]">{formatDate(booking.createdAt)}</span>
+              <span className="font-bold text-[var(--color-text-heading)]">{slot?.date}</span>
             </div>
             <div className="flex flex-col gap-0.5">
               <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">Time</span>
-              <span className="font-bold text-[var(--color-text-heading)]">{time}</span>
+              <span className="font-bold text-[var(--color-text-heading)]">{slot?.time}</span>
             </div>
             <div className="flex flex-col gap-0.5">
               <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">Seats</span>

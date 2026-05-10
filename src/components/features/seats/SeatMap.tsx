@@ -1,43 +1,62 @@
+import { useMemo } from 'react'
 import SeatRow from './SeatRow'
 import { ROW_LABELS } from '../../../constants/seatTypes'
 import type { Seat } from '../../../types'
 
-const COLS = 12
-
 interface SeatMapProps {
   selectedSeats: Seat[]
   onToggle: (seat: Seat) => void
+  rows?: number
+  cols?: number
+  premiumCols?: number[]     // 1-based column indices
+  aisleAfterCol?: number     // 1-based column index
+  regularPrice?: number
+  premiumPrice?: number
+  bookedSeats?: Set<string>
 }
 
-function generateSeatMap(premiumCols = [4, 5, 6, 7], bookedSeats = new Set<string>()) {
-  return ROW_LABELS.slice(0, 8).map((row) => {
-    return Array.from({ length: COLS }, (_, col) => {
-      const isPremium = premiumCols.includes(col)
-      const seatId = `${row}${col + 1}`
-      if (bookedSeats.has(seatId)) {
-        return { row, col: col + 1, type: 'booked' as const, price: 0 }
-      }
-      return {
-        row,
-        col: col + 1,
-        type: isPremium ? ('premium' as const) : ('available' as const),
-        price: isPremium ? 24.99 : 14.99,
-      }
-    })
-  })
-}
+export default function SeatMap({
+  selectedSeats,
+  onToggle,
+  rows = 8,
+  cols = 12,
+  premiumCols = [5, 6, 7, 8],
+  aisleAfterCol = 6,
+  regularPrice = 14.99,
+  premiumPrice = 24.99,
+  bookedSeats,
+}: SeatMapProps) {
+  const booked = bookedSeats ?? new Set<string>()
 
-export default function SeatMap({ selectedSeats, onToggle }: SeatMapProps) {
-  const seatMap = generateSeatMap()
+  const seatMap = useMemo(() => {
+    return ROW_LABELS.slice(0, rows).map((row) =>
+      Array.from({ length: cols }, (_, i) => {
+        const col = i + 1
+        const seatId = `${row}${col}`
+        const isPremium = premiumCols.includes(col)
 
-  const seatMapWithSelection = seatMap.map((rowSeats) =>
-    rowSeats.map((seat) => {
-      const isSelected = selectedSeats.some((s) => s.row === seat.row && s.col === seat.col)
-      if (isSelected) {
-        return { ...seat, type: 'selected' as const }
-      }
-      return seat
-    })
+        if (booked.has(seatId)) {
+          return { row, col, type: 'booked' as const, price: 0 }
+        }
+        return {
+          row,
+          col,
+          type: isPremium ? ('premium' as const) : ('available' as const),
+          price: isPremium ? premiumPrice : regularPrice,
+        }
+      })
+    )
+  }, [rows, cols, premiumCols, regularPrice, premiumPrice, booked])
+
+  const seatMapWithSelection = useMemo(
+    () =>
+      seatMap.map((rowSeats) =>
+        rowSeats.map((seat) => {
+          const isSelected = selectedSeats.some((s) => s.row === seat.row && s.col === seat.col)
+          return isSelected ? { ...seat, type: 'selected' as const } : seat
+        })
+      ),
+    [seatMap, selectedSeats]
   )
 
   return (
@@ -54,12 +73,11 @@ export default function SeatMap({ selectedSeats, onToggle }: SeatMapProps) {
             key={rowSeats[0].row}
             row={rowSeats[0].row}
             seats={rowSeats}
+            aisleAfterCol={aisleAfterCol}
             onToggle={onToggle}
           />
         ))}
       </div>
-
-      <p className="text-xs text-[var(--color-text-muted)] text-center mt-2">Aisle</p>
     </div>
   )
 }

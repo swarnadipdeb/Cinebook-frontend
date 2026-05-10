@@ -4,15 +4,15 @@ import SeatMap from '../../components/features/seats/SeatMap'
 import SeatLegend from '../../components/features/seats/SeatLegend'
 import BookingSummary from '../../components/features/booking/BookingSummary'
 import { createBooking } from '../../services/bookingService'
-import type { Movie, Showtime, Seat } from '../../types'
+import type { Movie, ShowtimeResponseDTO, ShowSlot, Seat } from '../../types'
 
 export default function SeatSelectionPage() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { movie, showtime, time } = (location.state || {}) as {
+  const { movie, showtime, slot } = (location.state || {}) as {
     movie: Movie
-    showtime: Showtime
-    time: string
+    showtime: ShowtimeResponseDTO
+    slot: ShowSlot
   }
 
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
@@ -37,17 +37,17 @@ export default function SeatSelectionPage() {
     const booking = await createBooking({
       movie,
       showtime,
-      time,
+      slot,
       seats: selectedSeats,
       totalPrice,
     })
-    navigate(`/booking/${booking.id}`, { state: { booking, movie, showtime, time, selectedSeats } })
+    navigate(`/booking/${booking.id}`, { state: { booking, movie, showtime, slot, selectedSeats } })
   }
 
-  if (!movie) {
+  if (!movie || !slot) {
     return (
       <div className="text-center py-16 text-[var(--color-text-muted)]">
-        <p>No movie selected. Please go back and choose a movie.</p>
+        <p>No showtime selected. Please go back and choose a showtime.</p>
       </div>
     )
   }
@@ -61,14 +61,23 @@ export default function SeatSelectionPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
         <div className="bg-[var(--color-bg-card)] rounded-xl overflow-hidden shadow-[var(--shadow-card)]">
-          <SeatMap selectedSeats={selectedSeats} onToggle={toggleSeat} />
+          <SeatMap
+            selectedSeats={selectedSeats}
+            onToggle={toggleSeat}
+            rows={slot.rows}
+            cols={slot.cols}
+            premiumCols={slot.premiumCols}
+            aisleAfterCol={slot.aisleAfterCol}
+            regularPrice={slot.regularPrice}
+            premiumPrice={slot.premiumPrice}
+          />
         </div>
 
         <div className="min-w-0">
           <BookingSummary
             movie={movie}
             showtime={showtime}
-            time={time}
+            slot={slot}
             selectedSeats={selectedSeats}
             totalPrice={totalPrice}
             onConfirm={handleConfirm}

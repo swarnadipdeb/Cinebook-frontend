@@ -34,7 +34,7 @@ export default function OtpVerifyPage() {
     if (result.success) {
       navigate(ROUTES.HOME)
     } else {
-      setError('Invalid OTP. Please try again.')
+      setError(result.error || 'Invalid OTP. Please try again.')
     }
   }
 

@@ -11,6 +11,7 @@ export default function RegisterPage() {
     userName: '', email: '', password: '', confirmPassword: '', firstName: '', lastName: '', phone: ''
   })
   const [submitting, setSubmitting] = useState(false)
+  const [serverError, setServerError] = useState('')
 
   const validate = () => {
     const errs: Record<string, string> = {}
@@ -30,6 +31,7 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setServerError('')
     const errs = validate()
     if (Object.keys(errs).length) {
       setErrors(errs as Partial<Record<keyof typeof form, string>>)
@@ -40,6 +42,7 @@ export default function RegisterPage() {
     if (result.success && result.userName) {
       navigate(ROUTES.OTP_VERIFY, { state: { userName: result.userName, firstName: form.firstName, lastName: form.lastName, phone: form.phone } })
     } else {
+      setServerError(result.error || 'Signup failed. Please try again.')
       setSubmitting(false)
     }
   }
@@ -197,6 +200,10 @@ export default function RegisterPage() {
             {submitting ? 'Creating account...' : 'Create Account'}
           </button>
         </form>
+
+        {serverError && (
+          <p className="text-[var(--color-error)] text-sm text-center mt-3">{serverError}</p>
+        )}
 
         <p className="text-center mt-4 text-[var(--color-text-muted)] text-[14px]">
           Already have an account?{' '}

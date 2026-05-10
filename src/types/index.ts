@@ -55,6 +55,74 @@ export interface Showtime extends ShowtimeEntry {
   theater: Theater
 }
 
+// ---- Real API response types ----
+
+export interface ShowSlot {
+  screenId: string
+  time: string
+  date: string
+  premiumPrice: number
+  regularPrice: number
+  rows: number
+  cols: number
+  premiumCols: number[]       // 1-based column indices
+  aisleAfterCol: number       // 1-based column index
+}
+
+export interface ShowtimeResponseDTO {
+  id: string
+  movieId: string
+  theaterId: string
+  slots: ShowSlot[]
+  format: string
+  theater?: Theater
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface ScreenLayout {
+  id: string
+  movieId: string
+  screenId: string
+  theaterId: string
+  rows: number
+  cols: number
+  premiumCols: number[]
+  aisleAfterCol: number
+  pricing: {
+    premiumPrice: number
+    regularPrice: number
+  }
+  bookedSeats: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface TheaterRequest {
+  name: string
+  address: string
+  screens: number
+  amenities: string[]
+}
+
+export interface ShowtimeSlotRequest {
+  time: string
+  date: string
+  premiumPrice: number
+  regularPrice: number
+  rows: number
+  cols: number
+  premiumCols: number[]
+  aisleAfterCol: number
+}
+
+export interface ShowtimeRequest {
+  movieId: string
+  theaterId: string
+  format: string
+  slots: ShowtimeSlotRequest[]
+}
+
 export type SeatType = 'available' | 'selected' | 'booked' | 'premium' | 'disabled'
 
 export interface Seat {
@@ -67,8 +135,8 @@ export interface Seat {
 export interface Booking {
   id: string
   movie: Movie
-  showtime: Showtime
-  time: string
+  showtime: ShowtimeResponseDTO
+  slot: ShowSlot
   seats: Seat[]
   totalPrice: number
   status: string
@@ -78,8 +146,8 @@ export interface Booking {
 
 export interface BookingData {
   movie: Movie
-  showtime: Showtime
-  time: string
+  showtime: ShowtimeResponseDTO
+  slot: ShowSlot
   seats: Seat[]
   totalPrice: number
 }
@@ -97,19 +165,20 @@ export interface AuthContextValue {
   isAdmin: boolean
   loading: boolean
   login: (username: string, password: string) => Promise<{ success: boolean }>
-  register: (name: string, email: string, password: string) => Promise<{ success: boolean; userName?: string }>
-  verifyOtp: (userName: string, otp: string, firstName?: string, lastName?: string, phone?: string) => Promise<{ success: boolean }>
+  register: (name: string, email: string, password: string) => Promise<{ success: boolean; userName?: string; error?: string }>
+  verifyOtp: (userName: string, otp: string, firstName?: string, lastName?: string, phone?: string) => Promise<{ success: boolean; error?: string }>
   logout: () => void
 }
 
 export interface BookingContextValue {
   selectedMovie: Movie | null
-  selectedShowtime: Showtime | null
+  selectedShowtime: ShowtimeResponseDTO | null
+  selectedSlot: ShowSlot | null
   selectedSeats: Seat[]
   totalPrice: number
   bookingId: string | null
   selectMovie: (movie: Movie) => void
-  selectShowtime: (showtime: Showtime) => void
+  selectShowtime: (showtime: ShowtimeResponseDTO, slot: ShowSlot) => void
   toggleSeat: (seat: Seat) => void
   clearBooking: () => void
   confirmBooking: (id: string) => void
