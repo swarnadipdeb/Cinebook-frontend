@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SeatMap from '../../components/features/seats/SeatMap'
 import SeatLegend from '../../components/features/seats/SeatLegend'
 import BookingSummary from '../../components/features/booking/BookingSummary'
-import { createBooking } from '../../services/bookingService'
+import { createBooking, getSeatsByScreen } from '../../services/bookingService'
 import type { Movie, ShowtimeResponseDTO, ShowSlot, Seat } from '../../types'
 
 export default function SeatSelectionPage() {
@@ -15,7 +15,23 @@ export default function SeatSelectionPage() {
     slot: ShowSlot
   }
 
+  const [seatGrid, setSeatGrid] = useState<Seat[][]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
+
+  useEffect(() => {
+    if (!movie || !slot) return
+    setLoading(true)
+    getSeatsByScreen(movie.id, slot.screenId)
+      .then((grid) => {
+        setSeatGrid(grid)
+        setLoading(false)
+      })
+      .catch(() => {
+        setSeatGrid([])
+        setLoading(false)
+      })
+  }, [movie, slot])
 
   const totalPrice = useMemo(
     () => selectedSeats.reduce((sum, seat) => sum + seat.price, 0),
@@ -52,6 +68,14 @@ export default function SeatSelectionPage() {
     )
   }
 
+  if (loading) {
+    return (
+      <div className="text-center py-16 text-[var(--color-text-muted)]">
+        <p>Loading seat map...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-[1280px] mx-auto px-4 py-6">
       <div className="text-center mb-8">
@@ -62,14 +86,9 @@ export default function SeatSelectionPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 items-start">
         <div className="bg-[var(--color-bg-card)] rounded-xl overflow-hidden shadow-[var(--shadow-card)]">
           <SeatMap
+            seatGrid={seatGrid}
             selectedSeats={selectedSeats}
             onToggle={toggleSeat}
-            rows={slot.rows}
-            cols={slot.cols}
-            premiumCols={slot.premiumCols}
-            aisleAfterCol={slot.aisleAfterCol}
-            regularPrice={slot.regularPrice}
-            premiumPrice={slot.premiumPrice}
           />
         </div>
 

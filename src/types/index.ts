@@ -123,7 +123,7 @@ export interface ShowtimeRequest {
   slots: ShowtimeSlotRequest[]
 }
 
-export type SeatType = 'available' | 'selected' | 'booked' | 'premium' | 'disabled'
+export type SeatType = 'available' | 'selected' | 'booked' | 'premium' | 'aisle' | 'disabled'
 
 export interface Seat {
   row: string
@@ -131,6 +131,8 @@ export interface Seat {
   type: SeatType
   price: number
 }
+
+export type SeatResponseDTO = Seat
 
 export interface Booking {
   id: string

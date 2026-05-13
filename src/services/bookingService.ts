@@ -1,5 +1,5 @@
 import api from './api'
-import type { Booking, BookingData } from '../types'
+import type { Booking, BookingData, Seat } from '../types'
 
 // POST /bookings/v1/bookings
 export const createBooking = (bookingData: BookingData): Promise<Booking> => {
@@ -14,4 +14,9 @@ export const getBookingById = (id: string): Promise<Booking | null> => {
 // GET /bookings/v1/bookings/user/{userId}
 export const getBookingsByUser = (userId: string): Promise<Booking[]> => {
   return api.get(`/bookings/v1/bookings/user/${userId}`).then((r) => r.data)
+}
+
+// GET /bookings/movies/{movieId}/screens/{screenId}/seats
+export const getSeatsByScreen = (movieId: string, screenId: string): Promise<Seat[][]> => {
+  return api.get(`/bookings/movies/${movieId}/screens/${screenId}/seats`).then((r) => r.data)
 }

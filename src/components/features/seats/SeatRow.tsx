@@ -4,17 +4,20 @@ import type { Seat } from '../../../types'
 interface SeatRowProps {
   row: string
   seats: Seat[]
-  aisleAfterCol?: number   // 1-based column index — gap appears after this col
   onToggle: (seat: Seat) => void
 }
 
-export default function SeatRow({ row, seats, aisleAfterCol, onToggle }: SeatRowProps) {
+export default function SeatRow({ row, seats, onToggle }: SeatRowProps) {
   return (
     <div className="flex items-center gap-2">
       <span className="w-7 text-center font-bold text-[var(--color-text-muted)] text-sm flex-shrink-0">{row}</span>
       <div className="flex gap-1.5 items-center">
         {seats.map((seat) => {
-          const isClickable = seat.type !== SEAT_TYPES.BOOKED && seat.type !== SEAT_TYPES.DISABLED
+          const isAisle = seat.type === 'aisle'
+          const isClickable = !isAisle && seat.type !== SEAT_TYPES.BOOKED && seat.type !== SEAT_TYPES.DISABLED
+          if (isAisle) {
+            return <div key={`aisle-${seat.col}`} className="w-5 flex-shrink-0" />
+          }
           return (
             <>
               <button
@@ -35,9 +38,6 @@ export default function SeatRow({ row, seats, aisleAfterCol, onToggle }: SeatRow
                 aria-label={`Seat ${row}${seat.col} - ${seat.type}`}
                 title={`${row}${seat.col} - ${isClickable ? `$${seat.price}` : 'Unavailable'}`}
               />
-              {aisleAfterCol && seat.col === aisleAfterCol && (
-                <div key={`aisle-${seat.col}`} className="w-5 flex-shrink-0" />
-              )}
             </>
           )
         })}
